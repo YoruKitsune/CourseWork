@@ -23,7 +23,7 @@ namespace CourseWork.DocumentsClasses
         public List<CertificateClass> IssuedCertificates { private set; get; } = new();
         public List<CertificateClass> BrokenCertificates { private set; get; } = new();
 
-        public PersonClass(string name, string surname, string birthplace, string patronymic = "",  StatusEnum status = StatusEnum.single, string passportData)
+        public PersonClass(string name, string surname, string birthplace, string passportData,  string patronymic = "", StatusEnum status = StatusEnum.single)
         {
             Name = name;
             Surname = surname;

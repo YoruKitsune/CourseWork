@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CourseWork.DocumentsClasses
 {
@@ -18,9 +19,11 @@ namespace CourseWork.DocumentsClasses
             Mother = mother;
             DateOfBith = dateOfBith;
         }
-        public CertificateOfBirth()
+        public CertificateOfBirth() : base()
         {
-            throw new NotImplementedException();
+            Father = new PersonClass();
+            Mother = new PersonClass();
+            DateOfBith = DateTime.Now;
         }
     }
 }

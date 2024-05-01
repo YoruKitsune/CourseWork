@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CourseWork.DocumentsClasses
 {
@@ -27,7 +28,12 @@ namespace CourseWork.DocumentsClasses
         }
         public CertificateClass()
         {
-            throw new NotImplementedException();
+            this.Series = 0;
+            this.Number = 0;
+            this.IssueDate = DateTime.Now;
+            this.IssuePlace = "";
+            this.NumberOfAct = 0;
+            this.DateOfAct = DateTime.Now; 
         }
     }
 }
