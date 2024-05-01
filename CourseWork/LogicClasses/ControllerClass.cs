@@ -54,7 +54,7 @@ namespace CourseWork.LogicClasses
                        CreateCertificate(referenceClass, _cUI.GetInformationFromConsole("серию свидетельства"), _cUI.GetInformationFromConsole("номер свидетельства"),
                         _cUI.GetInformationFromConsole("дату выдачи свидетельства"), _cUI.GetInformationFromConsole("место выдачи свидетельства"),
                         _cUI.GetInformationFromConsole("дату внесения акта свидетельства"), _cUI.GetInformationFromConsole("номер акта свидетельства"),
-                        _cUI.GetInformationFromConsole("дату смерти")),
+                        _cUI.GetInformationFromConsole("место смерти"),  _cUI.GetInformationFromConsole("дату смерти")),
 
                         personDied);
                     _cUI.Return();
