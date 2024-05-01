@@ -36,6 +36,7 @@ namespace CourseWork.LogicClasses
         }
         public void Return()
         {
+            CurScreen = new currentScreen(_chooseAction);
             CurScreen.Invoke();
         }
         private static void _chooseAction()
@@ -66,19 +67,28 @@ namespace CourseWork.LogicClasses
                     CurScreen.Invoke();
                     break;
                 default:
-                    ErrorMsg("Неверное действие!");
+                    ErrorMsg("Неверное действие!", true);
                     break;
 
             }
         }
-        public static void ErrorMsg(string msg)
+        public void ErrorMsg(string msg)
         {
             Console.Clear();
             _changeTextColor(ConsoleColor.Red);
             Console.WriteLine(msg);
             _changeTextColor(ConsoleColor.Green);
+            CurScreen = new currentScreen(_chooseAction);
             _keyPressAwait();
-            CurScreen.Invoke();
+        }
+        public static void ErrorMsg(string msg, bool clear)
+        {
+            if(clear) Console.Clear();
+            _changeTextColor(ConsoleColor.Red);
+            Console.WriteLine(msg);
+            _changeTextColor(ConsoleColor.Green);
+            CurScreen = new currentScreen(_chooseAction);
+            _keyPressAwait();
         }
         public static object GetInformationFromConsole(string output, bool flag)
         {
@@ -129,32 +139,38 @@ namespace CourseWork.LogicClasses
                     _controllerClass.InitialCreateCertificate(new CertificateOfEstablishingPaternity());
                     break;
                 default:
-                    ErrorMsg("Неверное действие!");
+                    ErrorMsg("Неверное действие!", true);
                     break;
 
             }
         }
         private static void _createPersonScreen()
         {
-
+            _controllerClass.InitialCreatePerson();
         }
         private static void _findPersonScreen()
         {
-
+            _controllerClass.FindPerson();
         }
         private static void _findCerificateScreen()
         {
-
+            _controllerClass.FindCertificate();
         }
         public static void PrintMsg(string msg)
         {
             Console.WriteLine(msg);
         }
-        public static void PrintMsg(string msg, bool clearConsole)
+        public void PrintMsg(string msg, bool clearConsole)
         {
             if (clearConsole) Console.Clear();
             Console.WriteLine(msg);
         }
+        public void AwaitButton()
+        {
+            Console.WriteLine("Для продолжения нажмите любую кнопку... ");
+            Console.ReadKey();
+        }
         public delegate void currentScreen();
+
     }
 }

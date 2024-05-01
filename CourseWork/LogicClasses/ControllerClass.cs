@@ -11,11 +11,11 @@ namespace CourseWork.LogicClasses
     internal class ControllerClass
     {
         private DatabaseManager _db;
-        private ConsoleUserInterface _cUI;
+        public ConsoleUserInterface _cUI { private set; get; }
         public ControllerClass(ConsoleUserInterface UI)
         {
             _cUI = UI;
-            _db = new DatabaseManager();
+            _db = new DatabaseManager(this);
            
         }
         public void InitialCreateCertificate(object referenceClass)
@@ -58,6 +58,7 @@ namespace CourseWork.LogicClasses
 
                         personDied);
                     _cUI.Return();
+             
                     break;
 
                 case "CourseWork.DocumentsClasses.CertificateOfChangeName":
@@ -109,12 +110,12 @@ namespace CourseWork.LogicClasses
                     _cUI.Return();
                     break;
                 default:
-                    ConsoleUserInterface.ErrorMsg("Неккоректные данные");
+                    _cUI.ErrorMsg("Неккоректные данные");
                     return;
             }
 
         }
-        public static object CreateCertificate(object referenceClass, params object[] args)
+        public object CreateCertificate(object referenceClass, params object[] args)
         {
 
             
@@ -143,13 +144,143 @@ namespace CourseWork.LogicClasses
 
                         return CertificateManager.CreateCertificate(Int32.Parse((string)args[0]), Int32.Parse((string)args[1]), DateTime.Parse((string)args[2]), (string)args[3], DateTime.Parse((string)args[2]), Int32.Parse((string)args[5]), (PersonClass)args[6], (PersonClass)args[7], (string)args[8], (string)args[9]);
                     default:
-                        ConsoleUserInterface.ErrorMsg("Неккоректные данные");
+                        _cUI.ErrorMsg("Неккоректные данные");
                         return -1;
                 }
             }
-         
-
-
         
+        public void InitialCreatePerson()
+        {
+
+            var name = (string) _cUI.GetInformationFromConsole("имя");
+            var surname = (string) _cUI.GetInformationFromConsole("фамилию");
+            var patronymic = (string) _cUI.GetInformationFromConsole("отчество");
+            var birthdate = DateTime.Parse((string)_cUI.GetInformationFromConsole("дату рождения"));
+            var birthplace = (string)_cUI.GetInformationFromConsole("место рождения");
+            var passportData = (string)_cUI.GetInformationFromConsole("паспортные данные");
+            var nationality = (string) _cUI.GetInformationFromConsole("национальность");
+            var status = StatusEnum.single;
+            switch (_cUI.GetInformationFromConsole("состояние(холост, женат, разведён, вдовец, мёртв").ToString().ToLower())
+            {
+                case "холост":
+                    status = StatusEnum.single;
+                    break;
+                case "женат":
+                    status = StatusEnum.married;
+                    break;
+                case "разведён":
+                    status = StatusEnum.divorced;
+                    break;
+                case "вдовец":
+                    status = StatusEnum.widower;
+                    break;
+                case "мёртв":
+                    status = StatusEnum.dead;
+                    break;
+                default:
+                    _cUI.ErrorMsg("Неверные данные!");
+                    return;
+
+            }
+            PersonClass newPerson = new PersonClass(name,surname,patronymic,birthplace, birthdate,passportData,nationality,status);
+            _db.CreatePerson(newPerson);
+            _cUI.Return();
+        }
+
+        public void FindCertificate()
+        {
+            var gettedCertificate = _db.FindCertificate(Int32.Parse((string)_cUI.GetInformationFromConsole("серию свидетельства")), Int32.Parse((string)_cUI.GetInformationFromConsole("номер свидетельства")));
+            try
+            {
+                var certificateCommon = (CertificateClass)gettedCertificate;
+                _cUI.PrintMsg($"Серия: {certificateCommon.Series} \n" +
+                $"Номер: {certificateCommon.Number}\n" +
+                $"Дата выдачи: {certificateCommon.IssueDate}\n" +
+                $"Место выдачи: {certificateCommon.IssuePlace}\n" +
+                $"Дата составления акта: {certificateCommon.DateOfAct}\n" +
+                $"Номер акта: {certificateCommon.NumberOfAct}\n", true);
+            } catch (Exception ex)
+            {
+                _cUI.ErrorMsg("Свидетельство не найдено!");
+                return;
+
+            }
+                
+            switch (gettedCertificate.GetType().ToString())
+            {
+                case "CourseWork.DocumentsClasses.CertificateOfAdoption":
+                    var CertificateOfAdoption = (CertificateOfAdoption)gettedCertificate;
+                    _cUI.PrintMsg($"Отчим: {CertificateOfAdoption.Stepfather.Name} {CertificateOfAdoption.Stepfather.Surname} {CertificateOfAdoption.Stepfather.Patronymic} \n" +
+                                    $"Мачиха: {CertificateOfAdoption.Stepmother.Name} {CertificateOfAdoption.Stepmother.Surname} {CertificateOfAdoption.Stepmother.Patronymic}\n", false);
+                    break;
+
+                case "CourseWork.DocumentsClasses.CertificateOfBirth":
+                    var CertificateOfBirth = (CertificateOfBirth)gettedCertificate;
+                        _cUI.PrintMsg($"Отец: {CertificateOfBirth.Father.Name} {CertificateOfBirth.Father.Surname} {CertificateOfBirth.Father.Patronymic} \n" +
+                                    $"Мать: {CertificateOfBirth.Mother.Name} {CertificateOfBirth.Mother.Surname} {CertificateOfBirth.Mother.Patronymic}\n" +
+                                    $"Дата рождения: {CertificateOfBirth.DateOfBirth} \n", false);
+                    break;
+
+                case "CourseWork.DocumentsClasses.CertificateOfDeath":
+                    var CertificateOfDeath = (CertificateOfDeath)gettedCertificate;
+                    _cUI.PrintMsg($"Место смерти: {CertificateOfDeath.DeathPlace} \n" +                           
+                                $"Дата смерти: {CertificateOfDeath.DeathDate} \n", false);
+                    break;
+
+                case "CourseWork.DocumentsClasses.CertificateOfChangeName":
+                    var CertificateOfChangeName = (CertificateOfChangeName)gettedCertificate;
+                    _cUI.PrintMsg($"Новое имя: {CertificateOfChangeName.NewName} \n" +
+                                $"Новая фамилия: {CertificateOfChangeName.NewSurname} \n" +
+                                $"Новое отчество: {CertificateOfChangeName.NewPatronymic}", false);
+                    break;
+
+                case "CourseWork.DocumentsClasses.CertificateOfDivorce":
+                    var CertificateOfDivorce = (CertificateOfDivorce)gettedCertificate;
+                    _cUI.PrintMsg($"Новое имя: {CertificateOfDivorce.GettedSurname} \n", false);
+                    break;
+
+                case "CourseWork.DocumentsClasses.CertificateOfEstablishingPaternity":
+
+                    var CertificateOfEstablishingPaternity = (CertificateOfEstablishingPaternity)gettedCertificate;
+                    _cUI.PrintMsg($"Отец: {CertificateOfEstablishingPaternity.Father.Name} {CertificateOfEstablishingPaternity.Father.Surname} {CertificateOfEstablishingPaternity.Father.Patronymic} \n", true);
+                                
+                    break;
+                case "CourseWork.DocumentsClasses.CertificateOfMarriage":
+                    var CertificateOfMarriage = (CertificateOfMarriage)gettedCertificate;
+                    _cUI.PrintMsg($"Жених: {CertificateOfMarriage.Groom.Name} {CertificateOfMarriage.Groom.Surname} {CertificateOfMarriage.Groom.Patronymic} \n" +
+                                $"Невеста: {CertificateOfMarriage.Bride.Name} {CertificateOfMarriage.Bride.Surname} {CertificateOfMarriage.Bride.Patronymic}\n" +
+                                $"Новая фамилия жениха: {CertificateOfMarriage.GroomSurname} \n" +
+                                $"Новая фамилия невесты: {CertificateOfMarriage.BrideSurname} \n", false);
+                    break;
+
+                default:
+                    _cUI.ErrorMsg("Свидетельство не найдено!");
+                    return;
+            }
+            _cUI.AwaitButton();
+            _cUI.Return();
+
+        }
+
+        public void FindPerson()
+        {
+            var findedPerson = _db.FindPerson((string)_cUI.GetInformationFromConsole("данные паспорта"));
+            if (findedPerson != null)
+            {
+                _cUI.PrintMsg($"Имя: {findedPerson.Name}\n" +
+                    $"Фамилия: {findedPerson.Surname}\n" +
+                    $"Отчество: {findedPerson.Patronymic}\n" +
+                    $"Дата рождения: {findedPerson.BirthDate}\n" +
+                    $"Место рождения: {findedPerson.BirthPlace}\n" +
+                    $"Данные паспорта: {findedPerson.PassportData}\n" +
+                    $"Национальность: {findedPerson.Nationality}\n" +
+                    $"Состояние: {findedPerson.Status}\n",true);
+            }
+            else
+            {
+                _cUI.ErrorMsg("Гражданин не найден");
+            }
+        }
+
     }
 }

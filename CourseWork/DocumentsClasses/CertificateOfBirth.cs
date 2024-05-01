@@ -12,18 +12,18 @@ namespace CourseWork.DocumentsClasses
        
         public PersonClass Mother { get; private set; }
        
-        public DateTime DateOfBith {  get; private set; }
+        public DateTime DateOfBirth {  get; private set; }
         public CertificateOfBirth(int series, int number, DateTime issueDate, string issuePlace, DateTime actDate, int actNumber, PersonClass father, PersonClass mother, DateTime dateOfBith) : base(series, number, issueDate, issuePlace, actDate, actNumber)
         {
             Father = father;
             Mother = mother;
-            DateOfBith = dateOfBith;
+            DateOfBirth = dateOfBith;
         }
         public CertificateOfBirth() : base()
         {
             Father = new PersonClass();
             Mother = new PersonClass();
-            DateOfBith = DateTime.Now;
+            DateOfBirth = DateTime.Now;
         }
     }
 }

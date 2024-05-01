@@ -18,19 +18,20 @@ namespace CourseWork.DocumentsClasses
         public string PassportData { private set; get; }
         public string? Nationality { private set; get; }
         public StatusEnum Status { private set; get; }
-        public PersonClass[]? Parents { set; get; }
         public PersonClass[]? Childs {  set; get; }
         public List<CertificateClass> IssuedCertificates { private set; get; } = new();
         public List<CertificateClass> BrokenCertificates { private set; get; } = new();
 
-        public PersonClass(string name, string surname, string birthplace, string passportData,  string patronymic = "", StatusEnum status = StatusEnum.single)
+        public PersonClass(string name, string surname, string patronymic, string birthplace, DateTime birthdate , string passportData, string nationality , StatusEnum status = StatusEnum.single)
         {
             Name = name;
             Surname = surname;
             Patronymic = patronymic;
             BirthPlace = birthplace;
-            Status = status;
+            BirthDate = birthdate;
             PassportData = passportData;
+            Nationality = nationality;
+            Status = status;
             using (SHA1 sha1Hash = SHA1.Create())
             {
                 byte[] sourceBytes = Encoding.UTF8.GetBytes(DateTime.Now.ToString() + name + surname + patronymic);

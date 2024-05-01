@@ -1,4 +1,5 @@
 ﻿using CourseWork.DocumentsClasses;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -12,10 +13,11 @@ namespace CourseWork.LogicClasses
     internal class DatabaseManager
     {
         private ApplicationContext _db;
-
-        public DatabaseManager()
+        private ControllerClass _controllerClass;
+        public DatabaseManager(ControllerClass controllerClass)
         {
             InitDataBase();
+            _controllerClass = controllerClass;
         }
         private void InitDataBase()
         {
@@ -49,7 +51,7 @@ namespace CourseWork.LogicClasses
                     _db.CertificateOfMarriage.Add((CertificateOfMarriage)Certificate);
                     break;
                 default:
-                    ConsoleUserInterface.ErrorMsg("Неккоректные данные");
+                    _controllerClass._cUI.ErrorMsg("Неккоректные данные");
                     break;
             }
             foreach (var person in _db.Persons)
@@ -73,10 +75,11 @@ namespace CourseWork.LogicClasses
             _db.Persons.Add(person);
             _db.SaveChanges(true);
         }
-        public void UpdatePerson()
+        public void UpdatePerson(string passportDate)
         {
 
         }
+     
         public PersonClass FindPerson(string passportData)
         {
             var Persons = _db.Persons.ToList();
@@ -93,84 +96,68 @@ namespace CourseWork.LogicClasses
         }
         public object FindCertificate(int series, int number)
         {
-            bool finded = false;
-            object findedCertificate = null;
+            var persons = _db.Persons.ToList();
             foreach (var Certificate in _db.CertificateOfAdoption.ToList())
             {
                 if (Certificate.Series == series && Certificate.Number == number)
                 {
-                    finded = true;
-                    findedCertificate = Certificate;
-                    break;
+                    return Certificate;
                 }
-                if (finded) break;
+               
             }
+          
             foreach (var Certificate in _db.CertificatesOfBirth.ToList())
             {
                 if (Certificate.Series == series && Certificate.Number == number)
                 {
-                    finded = true;
-                    findedCertificate = Certificate;
-                    break;
+                
+                    return Certificate;
                 }
-                if (finded) break;
+              
             }
             foreach (var Certificate in _db.CertificateOfDeath.ToList())
             {
                 if (Certificate.Series == series && Certificate.Number == number)
                 {
-                    finded = true;
-                    findedCertificate = Certificate;
-                    break;
+                    return Certificate;
                 }
-                if (finded) break;
+            
             }
             foreach (var Certificate in _db.CertificateOfChangeName.ToList())
             {
                 if (Certificate.Series == series && Certificate.Number == number)
                 {
-                    finded = true;
-                    findedCertificate = Certificate;
-                    break;
+                    return Certificate;
                 }
-                if (finded) break;
+             
             }
             foreach (var Certificate in _db.CertificateOfDivorce.ToList())
             {
                 if (Certificate.Series == series && Certificate.Number == number)
                 {
-                    finded = true;
-                    findedCertificate = Certificate;
-                    break;
+                    return Certificate;
                 }
-                if (finded) break;
+              
             }
             foreach (var Certificate in _db.CertificateOfEstablishingPaternity.ToList())
             {
                 if (Certificate.Series == series && Certificate.Number == number)
                 {
-                    finded = true;
-                    findedCertificate = Certificate;
-                    break;
+                    return Certificate;
                 }
-                if (finded) break;
+              
             }
             foreach (var Certificate in _db.CertificateOfMarriage.ToList())
             {
                 if (Certificate.Series == series && Certificate.Number == number)
                 {
-                    finded = true;
-                    findedCertificate = Certificate;
-                    break;
+                    return Certificate;
                 }
-                if (finded) break;
             }
-            return findedCertificate;
+            return 0;
+        
         }
-        public void FindCertificate()
-        {
 
-        }
 
 
 
