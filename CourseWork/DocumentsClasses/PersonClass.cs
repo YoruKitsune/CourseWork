@@ -14,8 +14,8 @@ namespace CourseWork.DocumentsClasses
         public string Surname { private set; get; }
         public string? Patronymic { private set; get; }
         public  DateTime BirthDate { private set; get; }
-        private string BirthPlace { set; get; }
-        private string? PassportData { set; get; }
+        public string BirthPlace { private set; get; }
+        public string PassportData { private set; get; }
         public string? Nationality { private set; get; }
         public StatusEnum Status { private set; get; }
         public PersonClass[]? Parents { set; get; }
@@ -23,13 +23,14 @@ namespace CourseWork.DocumentsClasses
         public List<CertificateClass> IssuedCertificates { private set; get; } = new();
         public List<CertificateClass> BrokenCertificates { private set; get; } = new();
 
-        public PersonClass(string name, string surname, string birthplace, string patronymic = "",  StatusEnum status = StatusEnum.single)
+        public PersonClass(string name, string surname, string birthplace, string patronymic = "",  StatusEnum status = StatusEnum.single, string passportData)
         {
             Name = name;
             Surname = surname;
             Patronymic = patronymic;
             BirthPlace = birthplace;
             Status = status;
+            PassportData = passportData;
             using (SHA1 sha1Hash = SHA1.Create())
             {
                 byte[] sourceBytes = Encoding.UTF8.GetBytes(DateTime.Now.ToString() + name + surname + patronymic);
@@ -45,6 +46,7 @@ namespace CourseWork.DocumentsClasses
             Patronymic = null;
             BirthPlace = "Nowhere";
             Status = StatusEnum.single;
+            PassportData = "0000 000000";
             using (SHA1 sha1Hash = SHA1.Create())
             {
                 byte[] sourceBytes = Encoding.UTF8.GetBytes(DateTime.Now.ToString() + Name + Surname + Patronymic);

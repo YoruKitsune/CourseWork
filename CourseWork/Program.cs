@@ -1,4 +1,5 @@
 ﻿using CourseWork.DocumentsClasses;
+using CourseWork.LogicClasses;
 
 using (ApplicationContext db = new ApplicationContext())
 {
@@ -6,12 +7,14 @@ using (ApplicationContext db = new ApplicationContext())
     PersonClass tom = new PersonClass("Tom", "Person","Moscow" ,"Lvovich");
     PersonClass alice = new PersonClass("Alice", "Walter", "Omsk");
     CertificateOfAdoption test = new CertificateOfAdoption(1, 1, DateTime.Now, "here", DateTime.Now, 1, tom, alice);
+    DatabaseManager data = new DatabaseManager();
+    data.CreateCertificate(13);
     tom.BrokenCertificates?.Add(test);
     alice.BrokenCertificates?.Add(test);
     // добавляем их в бд
     db.Persons.Add(tom);
     db.Persons.Add(alice);
-    db.SaveChanges();
+   // db.SaveChanges();
     Console.WriteLine("Объекты успешно сохранены");
 
     // получаем объекты из бд и выводим на консоль
