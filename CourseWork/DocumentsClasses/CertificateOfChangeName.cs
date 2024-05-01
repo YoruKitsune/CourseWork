@@ -18,9 +18,11 @@ namespace CourseWork.DocumentsClasses
             NewPatronymic = newPatronymic;
 
         }
-        public CertificateOfChangeName()
+        public CertificateOfChangeName() : base()
         {
-            throw new NotImplementedException();
+            NewName = "";
+            NewPatronymic = "";
+            NewSurname = "";
         }
     }
 }

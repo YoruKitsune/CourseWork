@@ -13,9 +13,9 @@ namespace CourseWork.DocumentsClasses
         {
             Father = father;
         }
-        public CertificateOfEstablishingPaternity()
+        public CertificateOfEstablishingPaternity() : base()
         {
-            throw new NotImplementedException();
+            Father = new PersonClass();
         }
 
     }

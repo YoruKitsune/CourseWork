@@ -27,9 +27,14 @@ namespace CourseWork.DocumentsClasses
             GroomOldSurname = groom.Surname;
             BrideOldSurname = bride.Surname;
         }
-        public CertificateOfMarriage()
+        public CertificateOfMarriage() : base()
         {
-            throw new NotImplementedException();
+            Bride = new PersonClass();
+            Groom = new PersonClass();
+            GroomOldSurname = "";
+            GroomSurname = "";
+            BrideSurname = "";
+            BrideOldSurname = "";
         }
     }
 }

@@ -13,9 +13,9 @@ namespace CourseWork.DocumentsClasses
         {
             GettedSurname = gettedSurname;
         }
-        public CertificateOfDivorce()
+        public CertificateOfDivorce() : base()
         {
-            throw new NotImplementedException();
+            GettedSurname = "";
         }
     }
 }

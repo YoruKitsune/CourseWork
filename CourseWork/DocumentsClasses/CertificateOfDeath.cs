@@ -15,9 +15,10 @@ namespace CourseWork.DocumentsClasses
             DeathPlace = deathPlace;
             DeathDate = deathDate;
         }
-        public CertificateOfDeath()
+        public CertificateOfDeath() : base()
         {
-            throw new NotImplementedException();
+            DeathPlace = "";
+            DeathDate = DateTime.Now;
         }
     }
 }
