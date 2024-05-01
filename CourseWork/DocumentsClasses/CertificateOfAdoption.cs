@@ -20,9 +20,10 @@ namespace CourseWork.DocumentsClasses
             Stepmother = stepmother;
 
         }
-        public CertificateOfAdoption()
+        public CertificateOfAdoption() : base()
         {
-            throw new NotImplementedException();
+            Stepmother = new PersonClass();
+            Stepfather = new PersonClass();
         }
     }
 }

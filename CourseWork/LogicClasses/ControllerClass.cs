@@ -16,7 +16,7 @@ namespace CourseWork.LogicClasses
         {
             _cUI = UI;
             _db = new DatabaseManager(this);
-           
+
         }
         public void InitialCreateCertificate(object referenceClass)
         {
@@ -27,8 +27,8 @@ namespace CourseWork.LogicClasses
                     var stepfather = _db.FindPerson((string)_cUI.GetInformationFromConsole("паспортные данные отчима"));
                     var stepmother = _db.FindPerson((string)_cUI.GetInformationFromConsole("паспортные данные мачехи"));
                     _db.CreateCertificate(
-                        CreateCertificate(referenceClass, _cUI.GetInformationFromConsole("серию свидетельства"), _cUI.GetInformationFromConsole("номер свидетельства"), 
-                        _cUI.GetInformationFromConsole("дату выдачи свидетельства"), _cUI.GetInformationFromConsole("место выдачи свидетельства"), 
+                        CreateCertificate(referenceClass, _cUI.GetInformationFromConsole("серию свидетельства"), _cUI.GetInformationFromConsole("номер свидетельства"),
+                        _cUI.GetInformationFromConsole("дату выдачи свидетельства"), _cUI.GetInformationFromConsole("место выдачи свидетельства"),
                         _cUI.GetInformationFromConsole("дату внесения акта свидетельства"), _cUI.GetInformationFromConsole("номер акта свидетельства"),
                         stepfather, stepmother),
 
@@ -54,11 +54,11 @@ namespace CourseWork.LogicClasses
                        CreateCertificate(referenceClass, _cUI.GetInformationFromConsole("серию свидетельства"), _cUI.GetInformationFromConsole("номер свидетельства"),
                         _cUI.GetInformationFromConsole("дату выдачи свидетельства"), _cUI.GetInformationFromConsole("место выдачи свидетельства"),
                         _cUI.GetInformationFromConsole("дату внесения акта свидетельства"), _cUI.GetInformationFromConsole("номер акта свидетельства"),
-                        _cUI.GetInformationFromConsole("дату смерти")),
+                        _cUI.GetInformationFromConsole("место смерти"), _cUI.GetInformationFromConsole("дату смерти")),
 
                         personDied);
                     _cUI.Return();
-             
+
                     break;
 
                 case "CourseWork.DocumentsClasses.CertificateOfChangeName":
@@ -74,7 +74,7 @@ namespace CourseWork.LogicClasses
                     break;
                 case "CourseWork.DocumentsClasses.CertificateOfDivorce":
                     var personDevorced = _db.FindPerson((string)_cUI.GetInformationFromConsole("паспортные данные разведённого"));
-                    
+
                     _db.CreateCertificate(
                         CreateCertificate(referenceClass, _cUI.GetInformationFromConsole("серию свидетельства"), _cUI.GetInformationFromConsole("номер свидетельства"),
                         _cUI.GetInformationFromConsole("дату выдачи свидетельства"), _cUI.GetInformationFromConsole("место выдачи свидетельства"),
@@ -98,8 +98,8 @@ namespace CourseWork.LogicClasses
                     break;
 
                 case "CourseWork.DocumentsClasses.CertificateOfMarriage":
-                    var bride = _db.FindPerson((string)_cUI.GetInformationFromConsole("паспортные данные отчима"));
-                    var groom = _db.FindPerson((string)_cUI.GetInformationFromConsole("паспортные данные мачехи"));
+                    var bride = _db.FindPerson((string)_cUI.GetInformationFromConsole("паспортные данные невесты"));
+                    var groom = _db.FindPerson((string)_cUI.GetInformationFromConsole("паспортные данные жениха"));
                     _db.CreateCertificate(
                         CreateCertificate(referenceClass, _cUI.GetInformationFromConsole("серию свидетельства"), _cUI.GetInformationFromConsole("номер свидетельства"),
                         _cUI.GetInformationFromConsole("дату выдачи свидетельства"), _cUI.GetInformationFromConsole("место выдачи свидетельства"),
@@ -118,7 +118,10 @@ namespace CourseWork.LogicClasses
         public object CreateCertificate(object referenceClass, params object[] args)
         {
 
-            
+            try
+            {
+
+
 
                 switch (referenceClass.GetType().ToString())
                 {
@@ -148,50 +151,66 @@ namespace CourseWork.LogicClasses
                         return -1;
                 }
             }
-        
-        public void InitialCreatePerson()
-        {
-
-            var name = (string) _cUI.GetInformationFromConsole("имя");
-            var surname = (string) _cUI.GetInformationFromConsole("фамилию");
-            var patronymic = (string) _cUI.GetInformationFromConsole("отчество");
-            var birthdate = DateTime.Parse((string)_cUI.GetInformationFromConsole("дату рождения"));
-            var birthplace = (string)_cUI.GetInformationFromConsole("место рождения");
-            var passportData = (string)_cUI.GetInformationFromConsole("паспортные данные");
-            var nationality = (string) _cUI.GetInformationFromConsole("национальность");
-            var status = StatusEnum.single;
-            switch (_cUI.GetInformationFromConsole("состояние(холост, женат, разведён, вдовец, мёртв").ToString().ToLower())
+            catch (Exception ex)
             {
-                case "холост":
-                    status = StatusEnum.single;
-                    break;
-                case "женат":
-                    status = StatusEnum.married;
-                    break;
-                case "разведён":
-                    status = StatusEnum.divorced;
-                    break;
-                case "вдовец":
-                    status = StatusEnum.widower;
-                    break;
-                case "мёртв":
-                    status = StatusEnum.dead;
-                    break;
-                default:
-                    _cUI.ErrorMsg("Неверные данные!");
-                    return;
+                _cUI.ErrorMsg("Неккоректные данные");
+                return -1;
 
             }
-            PersonClass newPerson = new PersonClass(name,surname,patronymic,birthplace, birthdate,passportData,nationality,status);
-            _db.CreatePerson(newPerson);
-            _cUI.Return();
+        }
+
+        public void InitialCreatePerson()
+        {
+            try
+            {
+                var name = (string)_cUI.GetInformationFromConsole("имя");
+                var surname = (string)_cUI.GetInformationFromConsole("фамилию");
+                var patronymic = (string)_cUI.GetInformationFromConsole("отчество");
+                var birthdate = DateTime.Parse((string)_cUI.GetInformationFromConsole("дату рождения"));
+                var birthplace = (string)_cUI.GetInformationFromConsole("место рождения");
+                var passportData = (string)_cUI.GetInformationFromConsole("паспортные данные");
+                var nationality = (string)_cUI.GetInformationFromConsole("национальность");
+                var status = StatusEnum.single;
+                switch (_cUI.GetInformationFromConsole("состояние(холост, женат, разведён, вдовец, мёртв").ToString().ToLower())
+                {
+                    case "холост":
+                        status = StatusEnum.single;
+                        break;
+                    case "женат":
+                        status = StatusEnum.married;
+                        break;
+                    case "разведён":
+                        status = StatusEnum.divorced;
+                        break;
+                    case "вдовец":
+                        status = StatusEnum.widower;
+                        break;
+                    case "мёртв":
+                        status = StatusEnum.dead;
+                        break;
+                    default:
+                        _cUI.ErrorMsg("Неверные данные!");
+                        return;
+
+                }
+                PersonClass newPerson = new PersonClass(name, surname, patronymic, birthplace, birthdate, passportData, nationality, status);
+                _db.CreatePerson(newPerson);
+                _cUI.Return();
+            }
+            catch (Exception e)
+            {
+                _cUI.ErrorMsg(e.Message);
+                _cUI.Return();
+            }
+
         }
 
         public void FindCertificate()
         {
-            var gettedCertificate = _db.FindCertificate(Int32.Parse((string)_cUI.GetInformationFromConsole("серию свидетельства")), Int32.Parse((string)_cUI.GetInformationFromConsole("номер свидетельства")));
+       
             try
             {
+                var gettedCertificate = _db.FindCertificate(Int32.Parse((string)_cUI.GetInformationFromConsole("серию свидетельства")), Int32.Parse((string)_cUI.GetInformationFromConsole("номер свидетельства")));
                 var certificateCommon = (CertificateClass)gettedCertificate;
                 _cUI.PrintMsg($"Серия: {certificateCommon.Series} \n" +
                 $"Номер: {certificateCommon.Number}\n" +
@@ -199,13 +218,8 @@ namespace CourseWork.LogicClasses
                 $"Место выдачи: {certificateCommon.IssuePlace}\n" +
                 $"Дата составления акта: {certificateCommon.DateOfAct}\n" +
                 $"Номер акта: {certificateCommon.NumberOfAct}\n", true);
-            } catch (Exception ex)
-            {
-                _cUI.ErrorMsg("Свидетельство не найдено!");
-                return;
+           
 
-            }
-                
             switch (gettedCertificate.GetType().ToString())
             {
                 case "CourseWork.DocumentsClasses.CertificateOfAdoption":
@@ -216,14 +230,14 @@ namespace CourseWork.LogicClasses
 
                 case "CourseWork.DocumentsClasses.CertificateOfBirth":
                     var CertificateOfBirth = (CertificateOfBirth)gettedCertificate;
-                        _cUI.PrintMsg($"Отец: {CertificateOfBirth.Father.Name} {CertificateOfBirth.Father.Surname} {CertificateOfBirth.Father.Patronymic} \n" +
-                                    $"Мать: {CertificateOfBirth.Mother.Name} {CertificateOfBirth.Mother.Surname} {CertificateOfBirth.Mother.Patronymic}\n" +
-                                    $"Дата рождения: {CertificateOfBirth.DateOfBirth} \n", false);
+                    _cUI.PrintMsg($"Отец: {CertificateOfBirth.Father.Name} {CertificateOfBirth.Father.Surname} {CertificateOfBirth.Father.Patronymic} \n" +
+                                $"Мать: {CertificateOfBirth.Mother.Name} {CertificateOfBirth.Mother.Surname} {CertificateOfBirth.Mother.Patronymic}\n" +
+                                $"Дата рождения: {CertificateOfBirth.DateOfBirth} \n", false);
                     break;
 
                 case "CourseWork.DocumentsClasses.CertificateOfDeath":
                     var CertificateOfDeath = (CertificateOfDeath)gettedCertificate;
-                    _cUI.PrintMsg($"Место смерти: {CertificateOfDeath.DeathPlace} \n" +                           
+                    _cUI.PrintMsg($"Место смерти: {CertificateOfDeath.DeathPlace} \n" +
                                 $"Дата смерти: {CertificateOfDeath.DeathDate} \n", false);
                     break;
 
@@ -243,7 +257,7 @@ namespace CourseWork.LogicClasses
 
                     var CertificateOfEstablishingPaternity = (CertificateOfEstablishingPaternity)gettedCertificate;
                     _cUI.PrintMsg($"Отец: {CertificateOfEstablishingPaternity.Father.Name} {CertificateOfEstablishingPaternity.Father.Surname} {CertificateOfEstablishingPaternity.Father.Patronymic} \n", true);
-                                
+
                     break;
                 case "CourseWork.DocumentsClasses.CertificateOfMarriage":
                     var CertificateOfMarriage = (CertificateOfMarriage)gettedCertificate;
@@ -259,7 +273,13 @@ namespace CourseWork.LogicClasses
             }
             _cUI.AwaitButton();
             _cUI.Return();
+            }
+            catch (Exception ex)
+            {
+                _cUI.ErrorMsg("Свидетельство не найдено!");
+                return;
 
+            }
         }
 
         public void FindPerson()
@@ -274,12 +294,14 @@ namespace CourseWork.LogicClasses
                     $"Место рождения: {findedPerson.BirthPlace}\n" +
                     $"Данные паспорта: {findedPerson.PassportData}\n" +
                     $"Национальность: {findedPerson.Nationality}\n" +
-                    $"Состояние: {findedPerson.Status}\n",true);
+                    $"Состояние: {findedPerson.Status}\n", true);
             }
             else
             {
                 _cUI.ErrorMsg("Гражданин не найден");
             }
+            _cUI.AwaitButton();
+            _cUI.Return();
         }
 
     }

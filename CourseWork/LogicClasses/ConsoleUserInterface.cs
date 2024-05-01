@@ -47,30 +47,38 @@ namespace CourseWork.LogicClasses
                 "2 — Создать свидетельство\n" +
                 "3 — Найти карточку человека\n" +
                 "4 — Найти свидетельство");
-            int action = Int32.Parse((string)GetInformationFromConsole("номер действия", false));
-            switch (action)
+            try
             {
-                case 1:
-                    CurScreen = new currentScreen(_createPersonScreen);
-                    CurScreen.Invoke();
-                    break;
-                case 2:
-                    CurScreen = new currentScreen(_createCerificateScreen);
-                    CurScreen.Invoke();
-                    break;
-                case 3:
-                    CurScreen = new currentScreen(_findPersonScreen);
-                    CurScreen.Invoke();
-                    break;
-                case 4:
-                    CurScreen = new currentScreen(_findCerificateScreen);
-                    CurScreen.Invoke();
-                    break;
-                default:
-                    ErrorMsg("Неверное действие!", true);
-                    break;
+                int action = Int32.Parse((string)GetInformationFromConsole("номер действия", false));
+                switch (action)
+                {
+                    case 1:
+                        CurScreen = new currentScreen(_createPersonScreen);
+                        CurScreen.Invoke();
+                        break;
+                    case 2:
+                        CurScreen = new currentScreen(_createCerificateScreen);
+                        CurScreen.Invoke();
+                        break;
+                    case 3:
+                        CurScreen = new currentScreen(_findPersonScreen);
+                        CurScreen.Invoke();
+                        break;
+                    case 4:
+                        CurScreen = new currentScreen(_findCerificateScreen);
+                        CurScreen.Invoke();
+                        break;
+                    default:
+                        ErrorMsg("Неверное действие!", true);
+                        break;
 
+                }
+            } catch (Exception ex)
+            {
+                ErrorMsg("Неверное действие!", true);
             }
+            
+          
         }
         public void ErrorMsg(string msg)
         {
