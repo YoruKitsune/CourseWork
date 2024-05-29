@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access" MembersFormat="FullSignature">
+  <Class Name="CourseWork.DocumentsClasses.CertificateClass">
+    <Position X="11" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgBAAAAEAAAAAAAAAAAAAAACEAAAAAAAE=</HashCode>
+      <FileName>DocumentsClasses\CertificateClass.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CourseWork.DocumentsClasses.CertificateOfAdoption" Collapsed="true">
+    <Position X="4" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>DocumentsClasses\CertificateOfAdoption.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CourseWork.DocumentsClasses.CertificateOfBirth" Collapsed="true">
+    <Position X="10.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAABAQAAAAA=</HashCode>
+      <FileName>DocumentsClasses\CertificateOfBirth.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CourseWork.DocumentsClasses.CertificateOfChangeName" Collapsed="true">
+    <Position X="15.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAABAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>DocumentsClasses\CertificateOfChangeName.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CourseWork.DocumentsClasses.CertificateOfDeath" Collapsed="true">
+    <Position X="6.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>DocumentsClasses\CertificateOfDeath.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CourseWork.DocumentsClasses.CertificateOfDivorce" Collapsed="true">
+    <Position X="13" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DocumentsClasses\CertificateOfDivorce.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CourseWork.DocumentsClasses.CertificateOfEstablishingPaternity" Collapsed="true">
+    <Position X="17.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAA=</HashCode>
+      <FileName>DocumentsClasses\CertificateOfEstablishingPaternity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CourseWork.DocumentsClasses.CertificateOfMarriage" Collapsed="true">
+    <Position X="8.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DocumentsClasses\CertificateOfMarriage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CourseWork.DocumentsClasses.PersonClass">
+    <Position X="20" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACACACAEAAAAAIAAAAAAAAQABAQAAAAAgAAAAAAICUA=</HashCode>
+      <FileName>DocumentsClasses\PersonClass.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
